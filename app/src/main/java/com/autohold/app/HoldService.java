@@ -5,6 +5,7 @@ import android.accessibilityservice.GestureDescription;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.Gravity;
@@ -165,10 +166,10 @@ public class HoldService extends AccessibilityService {
     }
 
     private void performLongHold() {
-        int[] location = new int[2];
-        targetView.getLocationOnScreen(location);
-        float centerX = location[0] + (targetView.getWidth() / 2f);
-        float centerY = location[1] + (targetView.getHeight() / 2f);
+        Rect rect = new Rect();
+        targetView.getGlobalVisibleRect(rect);
+        float centerX = rect.exactCenterX();
+        float centerY = rect.exactCenterY();
 
         Path path = new Path();
         path.moveTo(centerX, centerY);
